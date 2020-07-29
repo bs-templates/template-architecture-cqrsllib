@@ -4,17 +4,23 @@ using BAYSOFT.Core.Domain.Interfaces.Infrastructures.Data.Contexts;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BAYSOFT.Core.Domain.Entities.Default;
+using BAYSOFT.Core.Domain.Interfaces.Services.Default.Samples;
 
 namespace BAYSOFT.Core.Application.Default.Samples.Commands.DeleteSample
 {
-    public class DeleteSampleCommandHandler : IRequestHandler<DeleteSampleCommand, DeleteSampleCommandResponse>
+    public class DeleteSampleCommandHandler : ApplicationRequestHandler<Sample, DeleteSampleCommand, DeleteSampleCommandResponse>
     {
         public IDefaultDbContext Context { get; set; }
-        public DeleteSampleCommandHandler(IDefaultDbContext context)
+        private IDeleteSampleService DeleteService { get; set; }
+        public DeleteSampleCommandHandler(
+            IDefaultDbContext context,
+            IDeleteSampleService deleteService)
         {
             Context = context;
+            DeleteService = deleteService;
         }
-        public async Task<DeleteSampleCommandResponse> Handle(DeleteSampleCommand request, CancellationToken cancellationToken)
+        public override async Task<DeleteSampleCommandResponse> Handle(DeleteSampleCommand request, CancellationToken cancellationToken)
         {
             var id = request.Project(x => x.SampleID);
 
@@ -23,7 +29,7 @@ namespace BAYSOFT.Core.Application.Default.Samples.Commands.DeleteSample
             if (data == null)
                 throw new Exception("Sample not found!");
 
-            Context.Samples.Remove(data);
+            await DeleteService.Run(data);
 
             await Context.SaveChangesAsync();
 

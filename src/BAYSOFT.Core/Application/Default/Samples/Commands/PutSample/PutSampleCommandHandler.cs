@@ -5,17 +5,23 @@ using BAYSOFT.Core.Domain.Interfaces.Infrastructures.Data.Contexts;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BAYSOFT.Core.Domain.Entities.Default;
+using BAYSOFT.Core.Domain.Interfaces.Services.Default.Samples;
 
 namespace BAYSOFT.Core.Application.Default.Samples.Commands.PutSample
 {
-    public class PutSampleCommandHandler : IRequestHandler<PutSampleCommand, PutSampleCommandResponse>
+    public class PutSampleCommandHandler : ApplicationRequestHandler<Sample, PutSampleCommand, PutSampleCommandResponse>
     {
         public IDefaultDbContext Context { get; set; }
-        public PutSampleCommandHandler(IDefaultDbContext context)
+        private IPutSampleService PutService { get; set; }
+        public PutSampleCommandHandler(
+            IDefaultDbContext context,
+            IPutSampleService putService)
         {
             Context = context;
+            PutService = putService;
         }
-        public async Task<PutSampleCommandResponse> Handle(PutSampleCommand request, CancellationToken cancellationToken)
+        public override async Task<PutSampleCommandResponse> Handle(PutSampleCommand request, CancellationToken cancellationToken)
         {
             var id = request.Project(x => x.SampleID);
             var data = await Context.Samples.SingleOrDefaultAsync(x => x.SampleID == id);
@@ -26,6 +32,8 @@ namespace BAYSOFT.Core.Application.Default.Samples.Commands.PutSample
             }
 
             request.Put(data);
+
+            await PutService.Run(data);
 
             await Context.SaveChangesAsync();
 

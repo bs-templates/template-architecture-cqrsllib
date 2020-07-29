@@ -31,10 +31,17 @@ namespace BAYSOFT.Core.Middleware
                     sql => sql.MigrationsAssembly(presentationAssembly.GetName().Name)));
 
             services.AddTransient<SampleValidator>();
-            services.AddTransient<PostSampleSpecificationsValidator>();
             services.AddTransient<SampleDescriptionAlreadyExistsSpecification>();
 
+            services.AddTransient<PutSampleSpecificationsValidator>();
+            services.AddTransient<PostSampleSpecificationsValidator>();
+            services.AddTransient<PatchSampleSpecificationsValidator>();
+            services.AddTransient<DeleteSampleSpecificationsValidator>();
+
+            services.AddTransient<IPutSampleService, PutSampleService>();
             services.AddTransient<IPostSampleService, PostSampleService>();
+            services.AddTransient<IPatchSampleService, PatchSampleService>();
+            services.AddTransient<IDeleteSampleService, DeleteSampleService>();
 
             var assembly = AppDomain.CurrentDomain.Load("BAYSOFT");
 
