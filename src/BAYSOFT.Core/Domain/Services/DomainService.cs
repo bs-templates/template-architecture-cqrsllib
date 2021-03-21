@@ -1,4 +1,4 @@
-﻿using BAYSOFT.Core.Domain.Entities;
+﻿using BAYSOFT.Abstractions.Core.Domain.Entities;
 using BAYSOFT.Core.Domain.Exceptions;
 using BAYSOFT.Core.Domain.Interfaces.Services;
 using FluentValidation;

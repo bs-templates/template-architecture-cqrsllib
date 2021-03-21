@@ -1,12 +1,12 @@
-using MediatR;
+using BAYSOFT.Abstractions.Core.Application;
+using BAYSOFT.Core.Domain.Entities.Default;
+using BAYSOFT.Core.Domain.Interfaces.Infrastructures.Data.Contexts;
+using BAYSOFT.Core.Domain.Interfaces.Services.Default.Samples;
 using Microsoft.EntityFrameworkCore;
 using ModelWrapper.Extensions.Put;
-using BAYSOFT.Core.Domain.Interfaces.Infrastructures.Data.Contexts;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using BAYSOFT.Core.Domain.Entities.Default;
-using BAYSOFT.Core.Domain.Interfaces.Services.Default.Samples;
 
 namespace BAYSOFT.Core.Application.Default.Samples.Commands.PutSample
 {
@@ -23,8 +23,8 @@ namespace BAYSOFT.Core.Application.Default.Samples.Commands.PutSample
         }
         public override async Task<PutSampleCommandResponse> Handle(PutSampleCommand request, CancellationToken cancellationToken)
         {
-            var id = request.Project(x => x.SampleID);
-            var data = await Context.Samples.SingleOrDefaultAsync(x => x.SampleID == id);
+            var id = request.Project(x => x.Id);
+            var data = await Context.Samples.SingleOrDefaultAsync(x => x.Id == id);
 
             if (data == null)
             {

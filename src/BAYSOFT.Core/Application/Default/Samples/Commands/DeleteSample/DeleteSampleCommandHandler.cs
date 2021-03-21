@@ -1,11 +1,11 @@
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+using BAYSOFT.Abstractions.Core.Application;
+using BAYSOFT.Core.Domain.Entities.Default;
 using BAYSOFT.Core.Domain.Interfaces.Infrastructures.Data.Contexts;
+using BAYSOFT.Core.Domain.Interfaces.Services.Default.Samples;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using BAYSOFT.Core.Domain.Entities.Default;
-using BAYSOFT.Core.Domain.Interfaces.Services.Default.Samples;
 
 namespace BAYSOFT.Core.Application.Default.Samples.Commands.DeleteSample
 {
@@ -22,9 +22,9 @@ namespace BAYSOFT.Core.Application.Default.Samples.Commands.DeleteSample
         }
         public override async Task<DeleteSampleCommandResponse> Handle(DeleteSampleCommand request, CancellationToken cancellationToken)
         {
-            var id = request.Project(x => x.SampleID);
+            var id = request.Project(x => x.Id);
 
-            var data = await Context.Samples.SingleOrDefaultAsync(x => x.SampleID == id);
+            var data = await Context.Samples.SingleOrDefaultAsync(x => x.Id == id);
 
             if (data == null)
                 throw new Exception("Sample not found!");

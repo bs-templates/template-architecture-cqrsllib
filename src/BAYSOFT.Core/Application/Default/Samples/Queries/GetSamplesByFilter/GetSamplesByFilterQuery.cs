@@ -1,3 +1,4 @@
+using BAYSOFT.Abstractions.Core.Application;
 using BAYSOFT.Core.Domain.Entities.Default;
 
 namespace BAYSOFT.Core.Application.Default.Samples.Queries.GetSamplesByFilter
@@ -6,7 +7,7 @@ namespace BAYSOFT.Core.Application.Default.Samples.Queries.GetSamplesByFilter
     {
         public GetSamplesByFilterQuery()
         {
-            ConfigKeys(x => x.SampleID);
+            ConfigKeys(x => x.Id);
             
             // Configures supressed properties & response properties
             //ConfigSuppressedProperties(x => x);

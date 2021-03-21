@@ -1,3 +1,4 @@
+using BAYSOFT.Abstractions.Core.Application;
 using BAYSOFT.Core.Domain.Entities.Default;
 
 namespace BAYSOFT.Core.Application.Default.Samples.Commands.PostSample
@@ -6,7 +7,7 @@ namespace BAYSOFT.Core.Application.Default.Samples.Commands.PostSample
     {
         public PostSampleCommand()
         {
-            ConfigKeys(x => x.SampleID);
+            ConfigKeys(x => x.Id);
             
             // Configures supressed properties & response properties
             //ConfigSuppressedProperties(x => x);

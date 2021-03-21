@@ -1,4 +1,4 @@
-﻿using BAYSOFT.Core.Domain.Entities;
+﻿using BAYSOFT.Abstractions.Core.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace BAYSOFT.Core.Domain.Interfaces.Services
